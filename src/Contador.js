@@ -59,3 +59,5 @@ function inicializarContadores() {
 }
 
 window.addEventListener("load", inicializarContadores);
+
+export default inicializarContadores;

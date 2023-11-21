@@ -12,9 +12,9 @@ function Relogio() {
 
     const interval = setInterval(() => {
       const date = new Date();
-      setHour(date.getHours());
-      setMinute(date.getMinutes());
-      setSecond(date.getSeconds());
+      setHour(date.getHours().toString().padStart(2,"0"));
+      setMinute(date.getMinutes().toString().padStart(2,"0"));
+      setSecond(date.getSeconds().toString().padStart(2,"0"));
     }, 1000);
     
     return () => clearInterval(interval);
@@ -22,7 +22,9 @@ function Relogio() {
   }, [hour, minute, second]);
 
   return (
-    <h1>{hour}:{minute}:{second}</h1>
+    <div className='relogio'>
+      <h2>{hour}:{minute}:{second}</h2>
+    </div>
   );
 }
 
