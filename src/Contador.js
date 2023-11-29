@@ -1,63 +1,65 @@
 import React, { useEffect, useState } from 'react';
 import './Contador.css';
-function inicializarContadores() {
-    let totalPessoas = 0;
-    let homens = 0;
-    let mulheres = 0;
 
-    const totalElement = document.getElementById("total");
-    const homensElement = document.getElementById("homens");
-    const mulheresElement = document.getElementById("mulheres");
-    const incrementarHomensButton = document.getElementById("incrementarHomens");
-    const decrementarHomensButton = document.getElementById("decrementarHomens");
-    const incrementarMulheresButton = document.getElementById("incrementarMulheres");
-    const decrementarMulheresButton = document.getElementById("decrementarMulheres");
-    const resetarButton = document.getElementById("resetar");
+function Contador() {
+    const [totalPessoas, setTotalPessoas] = useState(0);
+    const [homens, setHomens] = useState(0);
+    const [mulheres, setMulheres] = useState(0);
 
-    function atualizarContagens() {
-        totalElement.textContent = totalPessoas;
-        homensElement.textContent = homens;
-        mulheresElement.textContent = mulheres;
-    }
+    const incrementarHomens = () => {
+        setHomens((prevCount) => prevCount + 1);
+        setTotalPessoas((prevCount) => prevCount + 1);
+    };
 
-    incrementarHomensButton.addEventListener("click", function () {
-        homens++;
-        totalPessoas++;
-        atualizarContagens();
-    });
-
-    decrementarHomensButton.addEventListener("click", function () {
+    const decrementarHomens = () => {
         if (homens > 0) {
-            homens--;
-            totalPessoas--;
-            atualizarContagens();
+            setHomens((prevCount) => prevCount - 1);
+            setTotalPessoas((prevCount) => prevCount - 1);
         }
-    });
+    };
 
-    incrementarMulheresButton.addEventListener("click", function () {
-        mulheres++;
-        totalPessoas++;
-        atualizarContagens();
-    });
+    const incrementarMulheres = () => {
+        setMulheres((prevCount) => prevCount + 1);
+        setTotalPessoas((prevCount) => prevCount + 1);
+    };
 
-    decrementarMulheresButton.addEventListener("click", function () {
+    const decrementarMulheres = () => {
         if (mulheres > 0) {
-            mulheres--;
-            totalPessoas--;
-            atualizarContagens();
+            setMulheres((prevCount) => prevCount - 1);
+            setTotalPessoas((prevCount) => prevCount - 1);
         }
-    });
+    };
 
-    resetarButton.addEventListener("click", function () {
-        totalPessoas = 0;
-        homens = 0;
-        mulheres = 0;
-        atualizarContagens();
-    });
+    const resetarContadores = () => {
+        setTotalPessoas(0);
+        setHomens(0);
+        setMulheres(0);
+    };
 
-    atualizarContagens();
+    return (
+        <div className="contador">
+            <p>Total: {totalPessoas}</p>
+            <div className='contador-pessoas'>
+                <div>
+                    <p>Homens: {homens}</p>
+                    <img className='imagem' src='./IconeHomem.png' alt="Ícone Homem"/>
+                    <div>
+                        <button className='incrementar' onClick={incrementarHomens}>+</button>
+                        <button className='decrementar' onClick={decrementarHomens}>-</button>
+                    </div>
+                </div>
+                <div>
+                    <p>Mulheres: {mulheres}</p>
+                    <img className='imagem' src='./IconeMulher.png' alt="Ícone Mulher"/> 
+                    <div>
+                        <button className='incrementar' onClick={incrementarMulheres}>+</button>
+                        <button className='decrementar' onClick={decrementarMulheres}>-</button>
+                    </div>
+                </div>
+            </div>
+            <button className='resetar' onClick={resetarContadores}>Resetar</button>
+        </div>
+    );
 }
 
-window.addEventListener("load", inicializarContadores);
-
-export default inicializarContadores;
+export default Contador;

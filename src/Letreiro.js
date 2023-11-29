@@ -1,25 +1,36 @@
-// import './Letreiro.css';
+import './Letreiro.css';
+import React ,{ useEffect, useState } from 'react';
 
+function Letreiro() {
+  const [texto, setTexto] = useState('Conheça a Fatec');
+  const [letr, setLetr] = useState('');
+  const [index, setIndex] = useState(0);
 
-
-// const texto = "conheça a Fatec";
-// let index = 0;
-// let speed = 100;
-
-// function escreverLetreiro() {
-//   const letreiro = document.getElementById('letreiro');
+  const letreiro = document.getElementById('letreiro');
   
-//   if (index < texto.length) {
-//     letreiro.innerHTML += texto.charAt(index);
-//     index++;
-//     setTimeout(escreverLetreiro, speed);
-//   } else {
-//     index = 0;
-//     letreiro.innerHTML = '';
-//     setTimeout(escreverLetreiro, speed);
-//   }
-// }
+  useEffect(() => {
 
-// escreverLetreiro(); // Chama a função uma vez para iniciar o efeito
+    const interval = setInterval(() => {
+      if(letr.length === texto.length)
+      {
+        setLetr('');
+        setIndex(0);
+      } else {
+        setLetr(letr + texto[index]);
+        setIndex(index + 1);
+      }
+    }, 500);
+    
+    return () => clearInterval(interval);
 
-// export default escreverLetreiro; // Exporta a função para ser usada em outros arquivos, se necessário
+  }, [texto, letr, index]);
+
+  return (
+    <div className='Letreiro'>
+      <h1>{letr}</h1>
+    </div>
+  )
+}
+
+
+export default Letreiro; 
