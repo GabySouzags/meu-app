@@ -5,8 +5,6 @@ function Letreiro() {
   const [texto, setTexto] = useState('Conheça a Fatec');
   const [letr, setLetr] = useState('');
   const [index, setIndex] = useState(0);
-
-  const letreiro = document.getElementById('letreiro');
   
   useEffect(() => {
 

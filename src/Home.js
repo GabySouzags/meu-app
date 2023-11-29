@@ -9,19 +9,19 @@ const Home = () => {
         <nav>
             <ul>
                 <li>
-                    <Link to="/Atv01">Atividade 01</Link>
+                    <Link to="/Atv01">Relógio e Letreiro</Link>
                 </li>
                 <li>
-                    <Link to="/Atv02">Atividade 02</Link>
+                    <Link to="/Atv02">Contador Homem/Mulher</Link>
                 </li>
                 <li>
-                    <Link to="/Atv03">Atividade 03</Link>
+                    <Link to="/Atv03">Calculadora</Link>
                 </li>
                 <li>
-                    <Link to="/Atv04">Atividade 04</Link>
+                    <Link to="/Atv04">Atividade Profile</Link>
                 </li>
                 <li>
-                    <Link to="/Atv05">Atividade 05</Link>
+                    <Link to="/Atv05">Jogo da Memoria</Link>
                 </li>
             </ul>
         </nav>
