@@ -1,58 +1,91 @@
+
 import React, { useState, useEffect } from 'react';
 import './JogoDaMemoria.css';
 
-const cartas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
-function JogoDaMemoria() {
-  const [cartasEmbaralhadas, setCartasEmbaralhadas] = useState([]);
-  const [cartasViradas, setCartasViradas] = useState([]);
-  const [paresEncontrados, setParesEncontrados] = useState([]);
+const shuffleArray = (array) => {
+  const shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+};
 
-  useEffect(() => {
-    const cartasDuplicadas = [...cartas, ...cartas];
-    setCartasEmbaralhadas(embaralharArray(cartasDuplicadas));
-  }, []);
+const generateCards = () => {
+  const symbols = ['🍬', '🍭', '🍫', '🍩', '🍰', '🧁', '🍧', '🍪'];
+  const cards = [...symbols, ...symbols];
+  return shuffleArray(cards);
+};
 
-  const handleClick = (index) => {
-    if (cartasViradas.length === 1) {
-      const cartaAtual = cartasEmbaralhadas[index];
-      const cartaAnterior = cartasEmbaralhadas[cartasViradas[0]];
+const initialGameState = {
+  cards: generateCards(),
+  flippedIndices: [],
+  matchedPairs: [],
+};
 
-      if (cartaAtual === cartaAnterior && index !== cartasViradas[0]) {
-        // Se as cartas correspondem e não é a mesma carta
-        setParesEncontrados([...paresEncontrados, cartaAtual]);
-      }
+const JogoDaMemoria = () => {
+  const [gameState, setGameState] = useState(initialGameState);
 
-      setTimeout(() => {
-        setCartasViradas([]);
-      }, 1000);
-    } else {
-      setCartasViradas([index]);
+  
+  const handleCardClick = (index) => {
+    if (gameState.flippedIndices.length < 2 && !gameState.flippedIndices.includes(index)) {
+      setGameState((prev) => ({ ...prev, flippedIndices: [...prev.flippedIndices, index] }));
     }
   };
 
-  const embaralharArray = (array) => {
-    const arrayEmbaralhado = array.slice();
-    for (let i = arrayEmbaralhado.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arrayEmbaralhado[i], arrayEmbaralhado[j]] = [arrayEmbaralhado[j], arrayEmbaralhado[i]];
+  useEffect(() => {
+    if (gameState.flippedIndices.length === 2) {
+      const [index1, index2] = gameState.flippedIndices;
+      if (gameState.cards[index1] === gameState.cards[index2]) {
+        setGameState((prev) => ({
+          ...prev,
+          matchedPairs: [...prev.matchedPairs, gameState.cards[index1]],
+        }));
+        
+      } 
+      setTimeout(() => {
+        setGameState((prev) => ({ ...prev, flippedIndices: [] }));
+      }, 1000);
     }
-    return arrayEmbaralhado;
+  }, [gameState.flippedIndices, gameState.cards]);
+
+  useEffect(() => {
+    if (gameState.matchedPairs.length === gameState.cards.length / 2) {
+     
+      alert('Parabéns! Você ganhou!');
+      setGameState(initialGameState);
+    }
+  }, [
+    gameState.matchedPairs,
+    gameState.cards,
+    initialGameState,
+  ]);
+
+  const handleRestart = () => {
+    setGameState(initialGameState);
+  };
+
+  const renderCard = (symbol, index) => {
+    const isFlipped = gameState.flippedIndices.includes(index) || gameState.matchedPairs.includes(symbol);
+    return (
+      <div
+        key={index}
+        className={`card ${isFlipped ? 'flipped' : ''}`}
+        onClick={() => handleCardClick(index)}
+      >
+        {isFlipped ? symbol : '?'}
+      </div>
+    );
   };
 
   return (
-    <div className="JogoMemoria">
-      <h1>Jogo da Memória</h1>
-      <div className="container-cartas">
-        {cartasEmbaralhadas.map((carta, index) => (
-          <div
-            key={index}
-            className={`carta ${cartasViradas.includes(index) || paresEncontrados.includes(carta) ? 'virada' : ''}`}
-            onClick={() => handleClick(index)}
-          >
-            {cartasViradas.includes(index) || paresEncontrados.includes(carta) ? carta : '?'}
-          </div>
-        ))}
+    <div className="App-Memoria">
+      <div className="card-container">
+        {gameState.cards.map((symbol, index) => renderCard(symbol, index))}
+      </div>
+      <div className="button-container">
+        <button className="button" onClick={handleRestart}>RESETAR</button>
       </div>
     </div>
   );

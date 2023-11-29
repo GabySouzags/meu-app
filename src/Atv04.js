@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom"
-import Gallery from "./Gallery";
+import Calculadora from "./Calculadora";
 
 export default function Atv04() {
     return (
         <>
             <h1>Atividade 04</h1>
             <br />
-            <Gallery/>
+            <Calculadora/>
+            <br />
             <Link to="/"> Retornar </Link>
         </>
     );

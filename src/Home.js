@@ -15,10 +15,10 @@ const Home = () => {
                     <Link to="/Atv02">Contador Homem/Mulher</Link>
                 </li>
                 <li>
-                    <Link to="/Atv03">Calculadora</Link>
+                    <Link to="/Atv03">Atividade Profile</Link>
                 </li>
                 <li>
-                    <Link to="/Atv04">Atividade Profile</Link>
+                    <Link to="/Atv04">Calculadora</Link>
                 </li>
                 <li>
                     <Link to="/Atv05">Jogo da Memoria</Link>
